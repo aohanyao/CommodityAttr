@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="32dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:paddingLeft="120dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_shop_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text=" ￥ 1999.9"
+                        android:textColor="#f00"
+                        android:textSize="18sp" />
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_shop_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:paddingLeft="120dp"
+                    android:textSize="@dimen/sp_16"
+                    android:maxLines="3"
+                    android:paddingRight="16dp"
+                    android:text="华为荣耀P8 "
+                    android:textColor="#000" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="已选择选择"
+                        android:visibility="gone"
+                        android:textColor="#999999" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="颜色"
+                        android:textColor="#999999" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_momery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="内存"
+                        android:textColor="#999999" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="版本"
+                        android:textColor="#999999"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginTop="8dp"
+
+                android:background="@color/ShawLiner" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="数量"
+                        android:textSize="@dimen/sp_16"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingLeft="8dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_shop_cut"
+                            android:layout_width="56dp"
+                            android:textColor="@color/white"
+                            android:background="@drawable/by_good_button"
+                            android:layout_height="30dp"
+                            android:text="—" />
+
+                        <TextView
+                            android:id="@+id/tv_shop_num"
+                            android:layout_width="56dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/bg_border"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:maxEms="999"
+                            android:paddingLeft="3dp"
+                            android:singleLine="true"
+                            android:text="1"
+                            android:textColor="#f00" />
+
+                        <Button
+                            android:id="@+id/btn_shop_add"
+                            android:layout_width="56dp"
+                            android:textColor="@color/white"
+                            android:layout_height="30dp"
+                            android:background="@drawable/by_good_button"
+                            android:text="+" />
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/ShawLiner" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="机身颜色"
+                        android:textSize="@dimen/sp_16"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.aohanyao.commodityattr.ui.FlowTagLayout
+                            android:id="@+id/rl_shop_color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/ShawLiner" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="@dimen/sp_16"
+                        android:text="机身内存"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.aohanyao.commodityattr.ui.FlowTagLayout
+                            android:id="@+id/rl_shop_momery"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/ShawLiner" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="@dimen/sp_16"
+                        android:text="版本"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.aohanyao.commodityattr.ui.FlowTagLayout
+                            android:id="@+id/rl_shop_version"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_buy_stages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/ShawLiner" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <Button
+                android:id="@+id/btn_buy_input_message"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_margin="16dp"
+
+                android:background="@drawable/by_good_button"
+                android:text="预订"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_shop_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="16dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/image_border"
+            android:padding="1dp"
+            android:src="@mipmap/image_loading" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_16"
+            android:src="@mipmap/icon_19_delete" />
+    </RelativeLayout>
+</LinearLayout>

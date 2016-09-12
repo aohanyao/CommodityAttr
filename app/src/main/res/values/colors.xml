@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196f3</color>
+    <!--<color name="colorPrimary">#2196f3</color>-->
+    <color name="colorPrimaryDark">#2196f3</color>
+    <color name="colorAccent">#2196f3</color>
+    <color name="background">#f6f6f6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="ShawLiner">#88cdcdcd</color>
+</resources>
