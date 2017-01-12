@@ -27,4 +27,5 @@ public interface CommodityAttrInf {
      */
     String getmCommodityAttrBaseInfName();
 
+
 }

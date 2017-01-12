@@ -19,19 +19,20 @@ import com.jjc.commodity.attr.library.inf.CommodityAttrInf;
 import com.jjc.commodity.attr.library.inf.CommodityInfoInf;
 import com.jjc.commodity.attr.library.inf.OnTagSelectListener;
 import com.jjc.commodity.attr.library.model.CommodityAttributeInfo;
+import com.jjc.commodity.attr.library.util.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static android.R.attr.tag;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by 江俊超 on 2017/1/11 0011.
  * <p>Gihub https://github.com/aohanyao</p>
  * <p>筛选商品属性的View</p>
+ * <b>//TODO 暂时没有想到更好的办法来解决筛选的问题
+ * </b>
+ * <li>1.将数据存储在数据库中</li>
  */
 public class CommodityAttrView<T extends CommodityInfoInf> extends ScrollView {
 
@@ -47,6 +48,10 @@ public class CommodityAttrView<T extends CommodityInfoInf> extends ScrollView {
     private List<AttrValueAdapter> mAttrValueAdapters;
     private int mTouchSlop;
     private int downY;
+    /**
+     * 已经选中的属性值
+     */
+    private String[] mSelectAttrValue;
 
     public CommodityAttrView(Context context) {
         this(context, null);
@@ -119,17 +124,6 @@ public class CommodityAttrView<T extends CommodityInfoInf> extends ScrollView {
      * 初始化数据
      */
     private void initData() {
-        //----------------------------获取所有的属性名称  颜色 内存  版本   start
-        for (CommodityInfoInf mCommodity : mCommoditys) {//循环整个 商品列表的每个商品
-            //获取到商品的所有属性
-            List<CommodityAttrInf> mCommodityAttrs = mCommodity.getmCommodityAttrInfos();
-            //便利每个属性
-            for (CommodityAttrInf attr : mCommodityAttrs) {
-                String attrName = attr.getmCommodityAttrBaseInfName();
-//                addAttrName(attrName);
-            }
-        }
-        //----------------------------获取所有的属性名称  颜色 内存  版本   end
 
         //----------------------------获取属性名称 之下所有的属性值 start
         for (CommodityInfoInf mCommodity : mCommoditys) {//循环整个 商品列表的每个商品
@@ -143,7 +137,8 @@ public class CommodityAttrView<T extends CommodityInfoInf> extends ScrollView {
             }
         }
         //----------------------------获取属性名称 之下所有的属性值 end
-
+        //初始化筛选的属性值
+        mSelectAttrValue = new String[mCommodityAttributeInfos.size()];
         //------测试查看数据是否正确
         for (CommodityAttributeInfo mCommodityAttributeInfo : mCommodityAttributeInfos) {
             Log.e(TAG, "initData: " + mCommodityAttributeInfo.getmAttrName());
@@ -212,11 +207,72 @@ public class CommodityAttrView<T extends CommodityInfoInf> extends ScrollView {
         String mAttrName = attributeInfo.getmAttrName();
         String mAttrValue = attributeInfo.getmAttrValues().get(integer);
 
-        Log.e(TAG, "queryCommodity: mAttrNames:" + mAttrName + "  mAttrValue:" + mAttrValue);
-//        if (mAttrValuePosition==0){
-//
-//        }
+        //Log.e(TAG, "queryCommodity: \t\t\t" + mAttrValuePosition + "   mAttrName:" + mAttrName + "  mAttrValue:" + mAttrValue);
+        //将用户选择的属性值存放到相对应的的数组中
+        mSelectAttrValue[mAttrValuePosition] = mAttrValue;
+
+        if (ArrayUtils.queryArrayValueIsNull(mSelectAttrValue))//每个属性并没有全部选择完毕
+            return;
+
+        for (String s : mSelectAttrValue) {
+            //  Log.e(TAG, "queryCommodity: \t\t\t\t\t" + s);
+        }
+        //已经获取到了一个商品所有的属性  开始编译没一个属性名称  获取属性值
+        //for (int i = 0; i < mAttrNames.length; i++) {//所有属性名称
+
+        CopyOnWriteArrayList<CommodityInfoInf> mQuery = new CopyOnWriteArrayList<>();
+
+        for (int i = 0; i < mAttrNames.length; i++) {
+            //所有商品
+            for (CommodityInfoInf mCommodity : mCommoditys) {
+                //获取到商品的所有属性
+                List<CommodityAttrInf> mCommodityAttrList = mCommodity.getmCommodityAttrInfos();
+                //遍历属性列表
+                for (CommodityAttrInf commodityAttrInf : mCommodityAttrList) {
+                    String attrName = commodityAttrInf.getmCommodityAttrBaseInfName();
+                    int indexOf = 0;
+                    try {
+                        indexOf = ArrayUtils.queryArrayContainElement(mAttrNames, attrName);
+                        Log.e(TAG, "queryCommodity: indexOf:" + indexOf + "  attrName:" + attrName + " mSelectAttrValue[indexOf]:" + mSelectAttrValue[indexOf]);
+                        if (!mSelectAttrValue[indexOf].equals(commodityAttrInf.getmCommodityAttrBaseInfValue()))
+                            continue;
+                        mQuery.add(mCommodity);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }
+
+
+        for (CommodityInfoInf commodityInfoInf : mQuery) {
+            //获取到商品的所有属性
+            List<CommodityAttrInf> mCommodityAttrList = commodityInfoInf.getmCommodityAttrInfos();
+            for (int i = 0; i < mCommodityAttrList.size(); i++) {
+                CommodityAttrInf attr = mCommodityAttrList.get(i);
+                String attrName = attr.getmCommodityAttrBaseInfName();
+                try {
+                    int indexOf = ArrayUtils.queryArrayContainElement(mAttrNames, attrName);
+                    Log.e(TAG, "queryCommodity: indexOf:" + indexOf + "  attrName:" + attrName + " mSelectAttrValue[indexOf]:" + mSelectAttrValue[indexOf]);
+                    if (!mSelectAttrValue[indexOf].equals(attr.getmCommodityAttrBaseInfValue()))
+                        continue;
+//                    Log.e(TAG, "queryCommodity: "+commodityInfoInf.getmCommodityInfoBaseInfName() );
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //}
+
     }
+
+    public void qC(List<CommodityAttrInf> mCommodityAttrList, String[] args){
+
+    }
+
 
     /**
      * 将属性值存放到集合中
@@ -239,25 +295,6 @@ public class CommodityAttrView<T extends CommodityInfoInf> extends ScrollView {
         }
     }
 
-//    /**
-//     * 添加属性名称到 集合中
-//     *
-//     * @param attrName 属性名称
-//     */
-//    private void addAttrName(String attrName) {
-//        if (mAttrNames.size() == 0) {
-//            //判断这个属性值是否已经添加到了集合中
-//        } else {
-//            //当前已经有这个属性名称
-//            if (!mAttrNames.contains(attrName)) {
-//                //没有这个属性名称
-//                CommodityAttributeInfo attributeInfo = new CommodityAttributeInfo(attrName, new ArrayList<String>());
-//                //判断这个属性值是否已经添加到了集合中
-//                mCommodityAttributeInfos.add(attributeInfo);
-//            }
-//        }
-//        mAttrNames.add(attrName);
-//    }
 
     /**
      * 设置属性名称 可以用来进行排序
