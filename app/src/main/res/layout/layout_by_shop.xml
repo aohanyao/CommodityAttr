@@ -185,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.aohanyao.commodityattr.v1.ui.FlowTagLayout
+                        <com.aohanyao.commodityattr.ui.FlowTagLayout
                             android:id="@+id/rl_shop_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.aohanyao.commodityattr.v1.ui.FlowTagLayout
+                        <com.aohanyao.commodityattr.ui.FlowTagLayout
                             android:id="@+id/rl_shop_momery"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -237,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.aohanyao.commodityattr.v1.ui.FlowTagLayout
+                        <com.aohanyao.commodityattr.ui.FlowTagLayout
                             android:id="@+id/rl_shop_version"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
