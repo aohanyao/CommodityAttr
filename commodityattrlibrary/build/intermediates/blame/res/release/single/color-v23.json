@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_seek_thumb.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_switch_track.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_edittext.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_tint_edittext.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_switch_thumb.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_default.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_tint_default.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_color_highlight_material.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_btn_checkable.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_btn_colored_borderless_text_material.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_spinner.xml",
+        "source": "D:\\Android\\GitCode\\CommodityAttr\\commodityattrlibrary\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\color-v23\\abc_tint_spinner.xml"
+    }
+]

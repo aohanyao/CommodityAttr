@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommodityAttrView"/>
+    <item name="rl_commodity_attr_value" type="id"/>
+    <item name="tv_attr_name" type="id"/>
+    <item name="tv_attr_value" type="id"/>
+    <string name="app_name">CommodityAttrLibrary</string>
+</resources>

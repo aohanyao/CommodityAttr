@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.aohanyao.commodityattr.adapter.LocalImageHolderView;
-import com.aohanyao.commodityattr.presenter.CcommodityPresenter;
+import com.aohanyao.commodityattr.presenter.CcommodityPresenter2;
 import com.aohanyao.commodityattr.presenter.inf.ShopDeialPresenterCallBack;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 
@@ -17,7 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements ShopDeialPresenterCallBack {
-    CcommodityPresenter presenter;
+    CcommodityPresenter2 presenter;
     @Bind(R.id.iv_shop_photo)
     ConvenientBanner convenientBanner;
     @Bind(R.id.tv_shop_price)
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements ShopDeialPresente
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        presenter = new CcommodityPresenter(this, this);
+        presenter = new CcommodityPresenter2(this, this);
     }
 
     public void select(View view) {
