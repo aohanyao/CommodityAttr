@@ -10,37 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6ecc526-ad4a-4759-8808-7cabfb6c1e7e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter2.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/espresso_core_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/espresso_idling_resource_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/exposed_instrumentation_api_publish_0_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/hamcrest_integration_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/hamcrest_library_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/javawriter_2_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/javax_annotation_api_1_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/javax_inject_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jsr305_2_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/rules_0_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/runner_0_5.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_compat_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_compat_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_ui_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_ui_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_utils_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_utils_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_fragment_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_fragment_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_media_compat_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_media_compat_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CommodityAttr.iml" afterPath="$PROJECT_DIR$/CommodityAttr.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/MainActivity.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_RxJava.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter2.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_NotThing.java" />
     </list>
     <ignored path="CommodityAttr.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,39 +56,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CcommodityPresenter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter.java">
+      <file leaf-file-name="CcommodityPresenter_RxJava.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_RxJava.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="243">
-              <caret line="35" column="32" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="32" />
+              <caret line="35" column="39" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
+            <state relative-caret-position="540">
+              <caret line="34" column="52" selection-start-line="34" selection-start-column="52" selection-end-line="34" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CcommodityPresenter2.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter2.java">
+      <file leaf-file-name="CcommodityPresenter_NotThing.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_NotThing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="638">
-              <caret line="486" column="0" selection-start-line="486" selection-start-column="0" selection-end-line="486" selection-end-column="0" />
+            <state relative-caret-position="459">
+              <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8983#9019#0" expanded="false" />
-                <element signature="e#11963#12006#0" expanded="true" />
-                <element signature="e#14158#14199#0" expanded="true" />
-                <element signature="e#16995#17035#0" expanded="true" />
-                <element signature="e#17326#17369#0" expanded="true" />
-                <element signature="e#17666#17707#0" expanded="true" />
+                <element signature="e#10919#10962#0" expanded="true" />
+                <element signature="e#13114#13155#0" expanded="true" />
+                <element signature="e#15951#15991#0" expanded="true" />
+                <element signature="e#16282#16325#0" expanded="true" />
+                <element signature="e#16622#16663#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2079,8 +2051,11 @@
         <option value="$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/inf/CommodityAttrInf.java" />
         <option value="$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/util/ArrayUtils.java" />
         <option value="$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/ui/CommodityAttrView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter2.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_NotThing.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_RxJava.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2192,6 +2167,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="presenter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CommodityAttr" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aohanyao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="commodityattr" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2564,12 +2569,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7748049" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6008919" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07692308" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2697,14 +2702,6 @@
     <entry file="file://$PROJECT_DIR$/commodityattrlibrary/src/main/res/drawable/round_rectangle_bg.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/v2/MainActivity.java" />
     <entry file="file://$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/adapter/AttrValueAdapter.java" />
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/model/CommodityAttributeInfo.java" />
     <entry file="file://$PROJECT_DIR$/../../sdk/sources/android-24/java/util/List.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -2718,35 +2715,42 @@
     <entry file="file://$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/util/ArrayUtils.java" />
     <entry file="file://$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/inf/CommodityInfoInf.java" />
     <entry file="file://$PROJECT_DIR$/commodityattrlibrary/src/main/java/com/jjc/commodity/attr/library/ui/CommodityAttrView.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
+        <state relative-caret-position="513">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_NotThing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="35" column="32" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="486" column="0" selection-start-line="486" selection-start-column="0" selection-end-line="486" selection-end-column="0" />
+        <state relative-caret-position="459">
+          <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8983#9019#0" expanded="false" />
-            <element signature="e#11963#12006#0" expanded="true" />
-            <element signature="e#14158#14199#0" expanded="true" />
-            <element signature="e#16995#17035#0" expanded="true" />
-            <element signature="e#17326#17369#0" expanded="true" />
-            <element signature="e#17666#17707#0" expanded="true" />
+            <element signature="e#10919#10962#0" expanded="true" />
+            <element signature="e#13114#13155#0" expanded="true" />
+            <element signature="e#15951#15991#0" expanded="true" />
+            <element signature="e#16282#16325#0" expanded="true" />
+            <element signature="e#16622#16663#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/presenter/CcommodityPresenter_RxJava.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="35" column="39" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/aohanyao/commodityattr/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="34" column="52" selection-start-line="34" selection-start-column="52" selection-end-line="34" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>

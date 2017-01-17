@@ -29,11 +29,11 @@ import aohanyao.com.commodityattr.R;
 import rx.Observable;
 
 /**
- * <p>作者：江俊超 on 2016/9/12 10:44</p>
- * <p>邮箱：928692385@qq.com</p>
- * <p></p>
+ * Created by 江俊超 on 2017/1/17 0017.
+ * <p>Gihub https://github.com/aohanyao</p>
+ * <p>没有使用Rxjava的版本</p>
  */
-public class CcommodityPresenter implements CcommodityPresenterInf, View.OnClickListener {
+public class CcommodityPresenter_NotThing implements CcommodityPresenterInf, View.OnClickListener {
     private int shopNum = 1;
     /**
      * 颜色 内存 分期 数量
@@ -108,7 +108,7 @@ public class CcommodityPresenter implements CcommodityPresenterInf, View.OnClick
     private Button goInput;
     private List<String> tempImageColor;
 
-    public CcommodityPresenter(Activity mActivity, ShopDeialPresenterCallBack callBack) {
+    public CcommodityPresenter_NotThing(Activity mActivity, ShopDeialPresenterCallBack callBack) {
         this.mActivity = mActivity;
         this.callBack = callBack;
 
@@ -174,7 +174,7 @@ public class CcommodityPresenter implements CcommodityPresenterInf, View.OnClick
         tvShopName.setText(responseDto.getMsg().getParent().getName());
         tvPrice.setText("￥" + responseDto.getPricemin());
         //------------名字 价格
-         ImageHelper.loadImageFromGlide(mActivity, responseDto.getMsg().getParent().getShowimg(), ivShopPhoto);
+        ImageHelper.loadImageFromGlide(mActivity, responseDto.getMsg().getParent().getShowimg(), ivShopPhoto);
         mBottomSheetDialog.show();
     }
 
@@ -229,21 +229,25 @@ public class CcommodityPresenter implements CcommodityPresenterInf, View.OnClick
             return;
         //隐藏购买按钮 显示为缺货
         resetBuyButton(false);
-        Observable.from(shopLists)
-                .filter(childsEntity -> childsEntity.getAttrinfo().getAttrs().get(0).getAttrvalue().equals(strColor))
-                .filter(childsEntity -> childsEntity.getAttrinfo().getAttrs().get(1).getAttrvalue().equals(strVersion))
-                .filter(childsEntity -> childsEntity.getAttrinfo().getAttrs().get(2).getAttrvalue().equals(strMemory))
-                .subscribe(childsEntity -> {
-                    L.e(childsEntity.getShopprice());
-                    tvPrice.setText("￥" + childsEntity.getShopprice());
-                    // ImageHelper.loadImageFromGlide(mActivity, Constant.IMAGE_URL + childsEntity.getShowimg(), ivShopPhoto);
-                    L.e("已找到商品：" + childsEntity.getName() + " id:" + childsEntity.getPid());
-                    selectGoods = childsEntity;
-                    tvShopName.setText(childsEntity.getName());
-                    //显示购买按钮
-                    resetBuyButton(true);
-                    initShopStagesCount++;
-                });
+        //遍历第一层商品
+        for (ShopDeialResponseDto.DataEntity.ChildsEntity childsEntity : shopLists) {
+            //遍历商品属性
+            List<ShopDeialResponseDto.DataEntity.ChildsEntity.AttrinfoEntity.AttrsEntity> attrsEntities = childsEntity.getAttrinfo().getAttrs();
+            //颜色 版本 内存全部对上
+            if (attrsEntities.get(0).getAttrvalue().equals(strColor)
+                    && attrsEntities.get(1).getAttrvalue().equals(strVersion)
+                    && attrsEntities.get(2).getAttrvalue().equals(strMemory)) {
+                L.e(childsEntity.getShopprice());
+                tvPrice.setText("￥" + childsEntity.getShopprice());
+                // ImageHelper.loadImageFromGlide(mActivity, Constant.IMAGE_URL + childsEntity.getShowimg(), ivShopPhoto);
+                L.e("已找到商品：" + childsEntity.getName() + " id:" + childsEntity.getPid());
+                selectGoods = childsEntity;
+                tvShopName.setText(childsEntity.getName());
+                //显示购买按钮
+                resetBuyButton(true);
+                initShopStagesCount++;
+            }
+        }
     }
 
     /**
@@ -284,18 +288,28 @@ public class CcommodityPresenter implements CcommodityPresenterInf, View.OnClick
         final List<String> iterationTempVersion = new ArrayList<>();
         //1. 遍历出 这个颜色下的所有手机
         //2. 遍历出 这些手机的所有版本
-        Observable.from(shopLists)
-                .filter(childsEntity -> childsEntity.getAttrinfo().getAttrs().get(0).getAttrvalue().equals(strColor))
-                .filter(childsEntity -> childsEntity.getAttrinfo().getAttrs().get(2).getAttrvalue().equals(strMemory))
-                .flatMap(childsEntity -> Observable.from(childsEntity.getAttrinfo().getAttrs()))
-                .filter(attrsEntity -> attrsEntity.getAttrname().equals(mActivity.getString(R.string.shop_standard)))
-                .subscribe(attrsEntity -> {
-                    iterationTempVersion.add(attrsEntity.getAttrvalue());
-                });
 
-        Observable.from(mTempVersions).filter(s -> !iterationTempVersion.contains(s)).subscribe(s -> {
-            mVersions.get(mTempVersions.indexOf(s)).setChecked(false);
-        });
+        for (ShopDeialResponseDto.DataEntity.ChildsEntity shopList : shopLists) {
+            //获得所有的属性
+            List<ShopDeialResponseDto.DataEntity.ChildsEntity.AttrinfoEntity.AttrsEntity> attrs = shopList.getAttrinfo().getAttrs();
+            if (attrs.get(0).getAttrvalue().equals(strColor)//判断颜色与内存
+                    && attrs.get(2).getAttrvalue().equals(strMemory)) {
+                //遍历属性
+                for (ShopDeialResponseDto.DataEntity.ChildsEntity.AttrinfoEntity.AttrsEntity attr : attrs) {
+                    //属性为 制式
+                    if (attr.getAttrname().equals(mActivity.getString(R.string.shop_standard))){
+                        iterationTempVersion.add(attr.getAttrvalue());
+                    }
+                }
+            }
+        }
+
+
+        for (String mTempVersion : mTempVersions) {
+            if (!iterationTempVersion.contains(mTempVersion)){
+                mVersions.get(mTempVersions.indexOf(mTempVersion)).setChecked(false);
+            }
+        }
         versionAdapter.notifyDataSetChanged();
         // L.e("迭代版本完成");
     }
@@ -333,26 +347,33 @@ public class CcommodityPresenter implements CcommodityPresenterInf, View.OnClick
         L.e("开始筛选颜色下的内存----------------------------------------------------------------------------------");
         final List<String> tempColorMemery = new ArrayList<>();
         //筛选内存
-        Observable.from(shopLists)
-                .filter(childsEntity -> childsEntity.getAttrinfo().getAttrs().get(0).getAttrvalue().equals(strColor))
-                .flatMap(childsEntity -> Observable.from(childsEntity.getAttrinfo().getAttrs()))
-                .filter(attrsEntity -> mActivity.getString(R.string.shop_monery).equals(attrsEntity.getAttrname()))
-                .subscribe(attrsEntity -> {
-                    tempColorMemery.add(attrsEntity.getAttrvalue());
-                    // L.e("内存："+attrsEntity.getAttrvalue());
-                });
+        for (ShopDeialResponseDto.DataEntity.ChildsEntity shopList : shopLists) {
+            //获取该商品的属性
+            List<ShopDeialResponseDto.DataEntity.ChildsEntity.AttrinfoEntity.AttrsEntity> attrs = shopList.getAttrinfo().getAttrs();
+            //判断颜色
+            if (attrs.get(0).getAttrvalue().equals(strColor)){
+                for (ShopDeialResponseDto.DataEntity.ChildsEntity.AttrinfoEntity.AttrsEntity attr : attrs) {
+                    //获取内存
+                    if (mActivity.getString(R.string.shop_monery).equals(attr.getAttrname())){
+                        //添加内存
+                        tempColorMemery.add(attr.getAttrvalue());
+                    }
+                }
+            }
+        }
 
-        Observable.from(mTempMonerys)
-                .filter(s -> !tempColorMemery.contains(s))
-                .subscribe(s -> {
-                    L.e("没有的内存：" + s);
-                    mMonerys.get(mTempMonerys.indexOf(s)).setChecked(false);
-                });
+        for (String mTempMonery : mTempMonerys) {
+            if (!tempColorMemery.contains(mTempMonery)){
+                L.e("没有的内存：" + mTempMonery);
+                mMonerys.get(mTempMonerys.indexOf(mTempMonery)).setChecked(false);
+            }
+        }
+
         momeryAdapter.notifyDataSetChanged();
         L.e("筛选颜色下的内存完成----------------------------------------------------------------------------------");
 
         //获取颜色的照片
-         ImageHelper.loadImageFromGlide(mActivity, mImages.get(tempImageColor.indexOf(strColor)), ivShopPhoto);
+        ImageHelper.loadImageFromGlide(mActivity, mImages.get(tempImageColor.indexOf(strColor)), ivShopPhoto);
     }
 
     @Override
@@ -410,45 +431,46 @@ public class CcommodityPresenter implements CcommodityPresenterInf, View.OnClick
         shopLists = responseDto.getMsg().getChilds();
         callBack.refreshSuccess("￥" + responseDto.getPricemin() + " - " + responseDto.getPricemax(), responseDto.getMsg().getParent().getName());
         callBack.parentName(responseDto.getMsg().getParent().getName());
+
+
         //遍历商品
-        Observable.from(shopLists)
-                //转换对象 获取所有商品的属性集合
-                .flatMap(childsEntity -> Observable.from(childsEntity.getAttrinfo().getAttrs()))
-                .subscribe(attrsEntity -> {
-                    //判断颜色
-                    if (mActivity.getString(R.string.shop_color).equals(attrsEntity.getAttrname()) && !mTempColors.contains(attrsEntity.getAttrvalue())) {
-                        mColors.add(new TagInfo(attrsEntity.getAttrvalue()));
-                        mTempColors.add(attrsEntity.getAttrvalue());
-                    }
-                    //判断制式
-                    if (mActivity.getString(R.string.shop_standard).equals(attrsEntity.getAttrname()) && !mTempVersions.contains(attrsEntity.getAttrvalue())) {
-                        mVersions.add(new TagInfo(attrsEntity.getAttrvalue()));
-                        mTempVersions.add(attrsEntity.getAttrvalue());
-                    }
-                    //判断内存
-                    if (mActivity.getString(R.string.shop_monery).equals(attrsEntity.getAttrname()) && !mTempMonerys.contains(attrsEntity.getAttrvalue())) {
-                        mMonerys.add(new TagInfo(attrsEntity.getAttrvalue()));
-                        mTempMonerys.add(attrsEntity.getAttrvalue());
-                    }
-                });
+
+        for (ShopDeialResponseDto.DataEntity.ChildsEntity shopList : shopLists) {
+            //遍历商品属性
+            for (ShopDeialResponseDto.DataEntity.ChildsEntity.AttrinfoEntity.AttrsEntity attrsEntity : shopList.getAttrinfo().getAttrs()) {
+                //判断颜色
+                if (mActivity.getString(R.string.shop_color).equals(attrsEntity.getAttrname()) && !mTempColors.contains(attrsEntity.getAttrvalue())) {
+                    mColors.add(new TagInfo(attrsEntity.getAttrvalue()));
+                    mTempColors.add(attrsEntity.getAttrvalue());
+                }
+                //判断制式
+                if (mActivity.getString(R.string.shop_standard).equals(attrsEntity.getAttrname()) && !mTempVersions.contains(attrsEntity.getAttrvalue())) {
+                    mVersions.add(new TagInfo(attrsEntity.getAttrvalue()));
+                    mTempVersions.add(attrsEntity.getAttrvalue());
+                }
+                //判断内存
+                if (mActivity.getString(R.string.shop_monery).equals(attrsEntity.getAttrname()) && !mTempMonerys.contains(attrsEntity.getAttrvalue())) {
+                    mMonerys.add(new TagInfo(attrsEntity.getAttrvalue()));
+                    mTempMonerys.add(attrsEntity.getAttrvalue());
+                }
+            }
+        }
 
         // 提取出 每种颜色的照片
         tempImageColor = new ArrayList<>();
         mImages = new ArrayList<>();
         //遍历所有的商品列表
-        Observable.from(shopLists)
-                .subscribe(childsEntity -> {
-                    String color = childsEntity.getAttrinfo().getAttrs().get(0).getAttrvalue();
-                    if (!tempImageColor.contains(color)) {
-                        mImages.add(childsEntity.getShowimg());
-                        tempImageColor.add(color);
-                    }
-                });
         // 提取出 每种颜色的照片
+        for (ShopDeialResponseDto.DataEntity.ChildsEntity childsEntity : shopLists) {
+            String color = childsEntity.getAttrinfo().getAttrs().get(0).getAttrvalue();
+            if (!tempImageColor.contains(color)) {
+                mImages.add(childsEntity.getShowimg());
+                tempImageColor.add(color);
+            }
+        }
 
         //通知图片
         callBack.changeData(mImages, "￥" + responseDto.getPricemin() + " - " + responseDto.getPricemax());
         callBack.complete(null);
     }
-
 }
