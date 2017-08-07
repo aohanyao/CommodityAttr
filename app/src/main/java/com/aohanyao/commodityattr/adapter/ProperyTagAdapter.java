@@ -7,16 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.aohanyao.commodityattr.model.TagInfo;
+import com.aohanyao.commodityattr.ui.OnInitSelectedPosition;
+
 import java.util.List;
 
 import aohanyao.com.commodityattr.R;
-import com.aohanyao.commodityattr.model.TagInfo;
-import com.aohanyao.commodityattr.ui.OnInitSelectedPosition;
-import rx.Observable;
 
 
 /**
- *商品属性
+ * 商品属性
  */
 public class ProperyTagAdapter extends BaseAdapter implements OnInitSelectedPosition {
 
@@ -59,10 +59,9 @@ public class ProperyTagAdapter extends BaseAdapter implements OnInitSelectedPosi
     }
 
     public void isSelect(int positon) {
-        Observable.from(mDataList).subscribe(tagInfo -> {
-            tagInfo.setSelect(false);
-        });
-        mDataList.get(positon).setSelect(true);
+        for (int i = 0; i < mDataList.size(); i++) {
+            mDataList.get(i).setSelect(positon == i);
+        }
     }
 
     @Override
