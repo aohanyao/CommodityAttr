@@ -64,12 +64,75 @@ public class CommoditySpiderHelper {
         }
     }
 
+    /***
+     * 根据已有的属性筛选剩余的属性
+     * <p>
+     *     颜色：
+     *          白色
+     *          <p>
+     *     筛选出白色下的内存有哪些，版本有哪些
+     *          </p>
+     * </p>
+     * @param params 已选择的属性
+     */
+    public void filterAttr(Map<String, String> params) {
+        //存放着已经筛选到了的商品
+        Set<CommoditySpiderInfo> selectCommodity = new HashSet<>();
+
+        //遍历蜘蛛
+        for (CommoditySpiderInfo commoditySpiderInfo : commoditySpiderInfos) {
+            //遍历商品属性
+            for (Map.Entry<String, String> stringStringEntry : commoditySpiderInfo.getFilterValues().entrySet()) {
+                //保存起来的Key
+                String key = stringStringEntry.getKey();
+                String value = stringStringEntry.getValue();
+
+                //参数中的值与筛选到的值进行对比
+                if (value.equals(params.get(key))) {//获取到当前key value相等的商品  颜色  白色
+                    //添加到集合中
+                    selectCommodity.add(commoditySpiderInfo);
+                }
+            }
+        }
+
+        //存放已经筛选到的属性值
+        Map<String, Set<String>> attrs = new TreeMap<>();
+        //遍历已筛选到的商品，获取剩余的属性
+        for (CommoditySpiderInfo commoditySpiderInfo : selectCommodity) {
+            //遍历商品属性
+            for (Map.Entry<String, String> stringStringEntry : commoditySpiderInfo.getFilterValues().entrySet()) {
+                //保存起来的Key
+                String key = stringStringEntry.getKey();
+                String value = stringStringEntry.getValue();
+
+                if (!params.containsKey(key)) {//不包含当前key 就是没有的属性
+                    //获取key的value
+                    Set<String> attrSet = attrs.get(key);
+                    if (attrSet == null) {
+                        attrSet = new HashSet<>();
+                        //存放属性值
+                        attrSet.add(value);
+                        //添加到map
+                        attrs.put(key, attrSet);
+                    } else {
+                        //添加值
+                        attrSet.add(value);
+                    }
+
+                }
+            }
+        }
+        if (onSelectCommodityListener != null) {
+            onSelectCommodityListener.sortAttrs(attrs);
+        }
+    }
+
     /**
-     * 开始筛选
+     * 开始筛选商品
      *
      * @param params
      */
-    public void filter(Map<String, String> params) {
+    public void filterCommodity(Map<String, String> params) {
         boolean isFound;
         //遍历蜘蛛
         for (CommoditySpiderInfo commoditySpiderInfo : commoditySpiderInfos) {
@@ -93,7 +156,6 @@ public class CommoditySpiderHelper {
         }
 
     }
-
 
 
 }

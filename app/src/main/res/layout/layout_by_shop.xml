@@ -275,7 +275,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="16dp"
-            android:scaleType="centerCrop"
             android:background="@drawable/image_border"
             android:padding="1dp"
             android:src="@mipmap/image_loading" />
