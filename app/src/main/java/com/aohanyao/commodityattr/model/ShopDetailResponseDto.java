@@ -10,7 +10,7 @@ import java.util.List;
  * <p>邮箱：aohanyao@gmail.com</p>
  * <p>商品详情返回数据对象</p>
  */
-public class ShopDeialResponseDto {
+public class ShopDetailResponseDto {
 
 
     /**

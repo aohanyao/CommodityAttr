@@ -18,12 +18,12 @@ import aohanyao.com.commodityattr.R;
 /**
  * 商品属性
  */
-public class ProperyTagAdapter extends BaseAdapter implements OnInitSelectedPosition {
+public class PropertyTagAdapter extends BaseAdapter implements OnInitSelectedPosition {
 
     private Context mContext;
     private List<TagInfo> mDataList;
 
-    public ProperyTagAdapter(Context mContext, List<TagInfo> mDataList) {
+    public PropertyTagAdapter(Context mContext, List<TagInfo> mDataList) {
         this.mContext = mContext;
         this.mDataList = mDataList;
     }

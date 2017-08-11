@@ -94,7 +94,14 @@
                         android:text="版本"
                         android:textColor="#999999"
                         />
-
+                    <TextView
+                        android:id="@+id/tv_shop_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="国家"
+                        android:textColor="#999999"
+                        />
                 </LinearLayout>
             </LinearLayout>
 
@@ -239,6 +246,31 @@
 
                         <com.aohanyao.commodityattr.ui.FlowTagLayout
                             android:id="@+id/rl_shop_version"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/ShawLiner" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="@dimen/sp_16"
+                        android:text="国家"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.aohanyao.commodityattr.ui.FlowTagLayout
+                            android:id="@+id/rl_shop_country"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>

@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aohanyao.commodity.library.CommoditySpiderHelper;
 import com.aohanyao.commodity.library.inf.OnSelectCommodityListener;
 import com.aohanyao.commodity.library.model.CommoditySpiderInfo;
-import com.aohanyao.commodityattr.adapter.ProperyTagAdapter;
+import com.aohanyao.commodityattr.adapter.PropertyTagAdapter;
+import com.aohanyao.commodityattr.model.ShopDetailResponseDto;
 import com.aohanyao.commodityattr.model.TagInfo;
 import com.aohanyao.commodityattr.mvp.contract.CommodityContract;
 import com.aohanyao.commodityattr.ui.FlowTagLayout;
@@ -21,7 +20,6 @@ import com.aohanyao.commodityattr.ui.MyDialog;
 import com.aohanyao.commodityattr.ui.OnTagSelectListener;
 import com.aohanyao.commodityattr.util.FileUtils;
 import com.aohanyao.commodityattr.util.ImageHelper;
-import com.aohanyao.commodityattr.model.ShopDeialResponseDto;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -39,43 +37,29 @@ import aohanyao.com.commodityattr.R;
  * <li>商品P</li>
  */
 public class CommodityPresenter extends CommodityContract.Presenter<CommodityContract.View>
-        implements OnSelectCommodityListener<ShopDeialResponseDto.MsgBean.CommodityBean> {
+        implements OnSelectCommodityListener<ShopDetailResponseDto.MsgBean.CommodityBean> {
     /**
      * 弹窗
      */
-    public MyDialog mBottomSheetDialog;
-    private int shopNum = 1;
+    private MyDialog mBottomSheetDialog;
+
     /**
-     * 颜色 内存 分期 数量
+     * 图像
      */
-    private TextView tvColor, tvMomey, tvNum;
-    /**
-     * 增加、减少
-     */
-    private Button btnCut, btnAdd;
-    private Button goInput;
-    private TextView tvVersion;
-    private TextView tvPrice;
-    private TextView tvShopName;
     private ImageView ivShopPhoto;
-    private String mShopImageUrl = "";
-    private LinearLayout llBuyStages;
-    Map<String, Set<String>> sortValues = new TreeMap<>();
+    /**
+     * 筛选到的所有的属性
+     */
+    private Map<String, Set<String>> sortValues = new TreeMap<>();
+    /**
+     * 筛选帮助类
+     */
     private CommoditySpiderHelper mCommoditySpiderHelper;
-    private ShopDeialResponseDto resonseDto;
-    private View contentView;
     /**
-     * 颜色列表
+     * 解析到的数据 Test数据
      */
-    private FlowTagLayout rlShopColor;
-    /**
-     * 内存列表
-     */
-    private FlowTagLayout rlShopMomery;
-    /**
-     * 版本
-     */
-    private FlowTagLayout rlShopVersion;
+    private ShopDetailResponseDto responseDto;
+
     private Activity mActivity;
 
     public CommodityPresenter(CommodityContract.View view, Activity mActivity) {
@@ -102,40 +86,37 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
         //设置视图
         mBottomSheetDialog.setContentView(contentView);
         ImageView ivClose = (ImageView) contentView.findViewById(R.id.iv_close);
-        goInput = (Button) contentView.findViewById(R.id.btn_buy_input_message);
         //-------颜色、内存、是否分期 数量
-        tvColor = (TextView) contentView.findViewById(R.id.tv_shop_color);
-        tvMomey = (TextView) contentView.findViewById(R.id.tv_shop_momery);
-        tvVersion = (TextView) contentView.findViewById(R.id.tv_shop_version);
-        tvNum = (TextView) contentView.findViewById(R.id.tv_shop_num);
-        tvPrice = (TextView) contentView.findViewById(R.id.tv_shop_price);
-        tvShopName = (TextView) contentView.findViewById(R.id.tv_shop_name);
+        TextView tvColor = (TextView) contentView.findViewById(R.id.tv_shop_color);
+        TextView tvMomey = (TextView) contentView.findViewById(R.id.tv_shop_momery);
+        TextView tvVersion = (TextView) contentView.findViewById(R.id.tv_shop_version);
+        TextView tvShopCountry = (TextView) contentView.findViewById(R.id.tv_shop_country);
+        TextView tvPrice = (TextView) contentView.findViewById(R.id.tv_shop_price);
+        TextView tvShopName = (TextView) contentView.findViewById(R.id.tv_shop_name);
         ivShopPhoto = (ImageView) contentView.findViewById(R.id.iv_shop_photo);
-        llBuyStages = (LinearLayout) contentView.findViewById(R.id.ll_buy_stages);
         //-------颜色、内存、是否分期 数量
 
 
-        rlShopColor = (FlowTagLayout) contentView.findViewById(R.id.rl_shop_color);
+        FlowTagLayout rlShopColor = (FlowTagLayout) contentView.findViewById(R.id.rl_shop_color);
         //--------------------------商品颜色
+
         //--------------------------内存列表
-        rlShopMomery = (FlowTagLayout) contentView.findViewById(R.id.rl_shop_momery);
+        FlowTagLayout rlShopMomery = (FlowTagLayout) contentView.findViewById(R.id.rl_shop_momery);
         //--------------------------内存列表
 
         //-------------------------制式版本
-        rlShopVersion = (FlowTagLayout) contentView.findViewById(R.id.rl_shop_version);
+        FlowTagLayout rlShopVersion = (FlowTagLayout) contentView.findViewById(R.id.rl_shop_version);
 
-        //------------------增加 减少
-        btnCut = (Button) contentView.findViewById(R.id.btn_shop_cut);
-        btnAdd = (Button) contentView.findViewById(R.id.btn_shop_add);
-        shopNum = 1;
-        //------------------增加 减少
+        FlowTagLayout rlShopCountry = (FlowTagLayout) contentView.findViewById(R.id.rl_shop_country);
+
+        //关闭
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        goInput.setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.btn_buy_input_message).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
@@ -144,90 +125,65 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
 
 
         ///////////初始化流式布局/////////初始化流式布局//--------初始化流式布局-------------
-        initAdapter();
+        //机身颜色 机身颜色机身颜色机身颜色机身颜色机身颜色 start
+        initAdapter(tvColor, "颜色", rlShopColor);
+        //机身颜色 机身颜色机身颜色机身颜色机身颜色机身颜色机身颜色end
+
+        //机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存
+        initAdapter(tvMomey, "内存", rlShopMomery);
+        //机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存
+
+        //版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本
+        initAdapter(tvVersion, "制式", rlShopVersion);
+        //版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本
+
+        //国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家
+        initAdapter(tvShopCountry, "国家", rlShopCountry);
+        //国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家国家
         ////////////初始化流式布局////////初始化流式布局//---------初始化流式布局------------
 
 
         //------------名字 价格
-        tvShopName.setText(resonseDto.getMsg().getParent().getName());
-        tvPrice.setText("￥" + resonseDto.getPricemin());
+        tvShopName.setText(responseDto.getMsg().getParent().getName());
+        tvPrice.setText("￥" + responseDto.getPricemin());
         //------------名字 价格
-        ImageHelper.loadImageFromGlide((Activity) view, resonseDto.getMsg().getParent().getShowimg(), ivShopPhoto);
+        ImageHelper.loadImageFromGlide((Activity) view, responseDto.getMsg().getParent().getShowimg(), ivShopPhoto);
         mBottomSheetDialog.show();
         // TODO 这里的代码全部是用来初始化 弹窗之类的，不用过于在意  end
     }
 
     /**
-     * 初始化流式布局
+     * 初始化适配器
+     *
+     * @param tvTip 提示文本
+     * @param key   key
+     * @param ftl   布局
      */
-    private void initAdapter() {
-        final Map<String, String> selectAttr = new TreeMap<>();
-        //机身颜色 机身颜色机身颜色机身颜色机身颜色机身颜色 start
-        final List<TagInfo> mColors = new ArrayList<>();
-        //颜色
-        for (String color : sortValues.get("颜色")) {
-            mColors.add(new TagInfo(color));
+    private void initAdapter(final TextView tvTip, String key, FlowTagLayout ftl) {
+        //属性筛选出来
+        final List<TagInfo> mAttrs = new ArrayList<>();
+        //属性
+        for (String attr : sortValues.get(key)) {
+            mAttrs.add(new TagInfo(attr));
         }
-        tvColor.setText("\"未选择颜色\"");
-        colorAdapter = new ProperyTagAdapter(mActivity, mColors);
-        rlShopColor.setAdapter(colorAdapter);
-        colorAdapter.notifyDataSetChanged();
-        rlShopColor.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
-        rlShopColor.setOnTagSelectListener(new OnTagSelectListener() {
+        //适配器
+        PropertyTagAdapter mAdapter = new PropertyTagAdapter(mActivity, mAttrs);
+        //设置适配器
+        ftl.setAdapter(mAdapter);
+        //通知适配器
+        mAdapter.notifyDataSetChanged();
+        //设置模式
+        ftl.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
+        //监听
+        ftl.setOnTagSelectListener(new OnTagSelectListener() {
             @Override
             public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
-                int index = selectedList.get(0);
-                //存放颜色
-                selectAttr.put("颜色", mColors.get(index).getText());
-                filterAttr(selectAttr);
+                //获取悬着到的
+                TagInfo tagInfo = mAttrs.get(selectedList.get(0));
+                //设置
+                tvTip.setText(tagInfo.getText());
             }
         });
-        //机身颜色 机身颜色机身颜色机身颜色机身颜色机身颜色机身颜色end
-
-        //机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存
-        final List<TagInfo> mMonerys = new ArrayList<>();
-        for (String monery : sortValues.get("内存")) {
-            mMonerys.add(new TagInfo(monery));
-        }
-        tvMomey.setText("\"未选择内存\"");
-        //-----------------------------创建适配器
-        momeryAdapter = new ProperyTagAdapter(mActivity, mMonerys);
-        rlShopMomery.setAdapter(momeryAdapter);
-        momeryAdapter.notifyDataSetChanged();
-        rlShopMomery.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
-        rlShopMomery.setOnTagSelectListener(new OnTagSelectListener() {
-            @Override
-            public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
-                int index = selectedList.get(0);
-                //内存
-                selectAttr.put("内存", mMonerys.get(index).getText());
-                filterAttr(selectAttr);
-            }
-        });
-        //机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存机身内存
-
-        //版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本
-        final List<TagInfo> mVersions = new ArrayList<>();
-        for (String version : sortValues.get("制式")) {
-            mVersions.add(new TagInfo(version));
-        }
-        tvVersion.setText("\"未选择版本\"");
-        //-----------------------------创建适配器
-        versionAdapter = new ProperyTagAdapter(mActivity, mVersions);
-        rlShopVersion.setAdapter(versionAdapter);
-        versionAdapter.notifyDataSetChanged();
-
-        rlShopVersion.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
-        rlShopVersion.setOnTagSelectListener(new OnTagSelectListener() {
-            @Override
-            public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
-                int index = selectedList.get(0);
-                //制式
-                selectAttr.put("制式", mVersions.get(index).getText());
-                filterAttr(selectAttr);
-            }
-        });
-        //版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本版本
     }
 
 
@@ -243,11 +199,11 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
     public void initData() {
         //模拟网络 从 assets中转换数据
         String json = FileUtils.getJson("commodity2.json", (Activity) view);
-        resonseDto = new Gson().fromJson(json, ShopDeialResponseDto.class);
-        List<ShopDeialResponseDto.MsgBean.CommodityBean> childs = resonseDto.getMsg().getChilds();
+        responseDto = new Gson().fromJson(json, ShopDetailResponseDto.class);
+        List<ShopDetailResponseDto.MsgBean.CommodityBean> childs = responseDto.getMsg().getChilds();
 
         List<CommoditySpiderInfo> commoditySpiderInfos = new ArrayList<>();
-        for (ShopDeialResponseDto.MsgBean.CommodityBean child : childs) {
+        for (ShopDetailResponseDto.MsgBean.CommodityBean child : childs) {
 
             commoditySpiderInfos.add(new CommoditySpiderInfo(child, child.getAttrinfo().getAttrs()));
         }
@@ -266,10 +222,6 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
         mCommoditySpiderHelper.filterAttr(params);
     }
 
-    private ProperyTagAdapter colorAdapter;
-    private ProperyTagAdapter momeryAdapter;
-    private ProperyTagAdapter versionAdapter;
-
     @Override
     public void sortValues(Map<String, Set<String>> sortValues) {
         //拿到了数据，将数据保存起来
@@ -284,7 +236,7 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
     }
 
     @Override
-    public void onSelectCommodityListener(ShopDeialResponseDto.MsgBean.CommodityBean commodity) {
+    public void onSelectCommodityListener(ShopDetailResponseDto.MsgBean.CommodityBean commodity) {
 
     }
 }
