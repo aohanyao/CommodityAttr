@@ -14,6 +14,7 @@
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:enabled="false"
         android:paddingTop="5dp"
         android:text="TAG标签"
         android:textColor="@drawable/tag_text_selector" />

@@ -1,12 +1,12 @@
 package com.aohanyao.commodityattr.mvp.presenter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aohanyao.commodity.library.CommoditySpiderHelper;
 import com.aohanyao.commodity.library.inf.OnSelectCommodityListener;
@@ -20,6 +20,7 @@ import com.aohanyao.commodityattr.ui.MyDialog;
 import com.aohanyao.commodityattr.ui.OnTagSelectListener;
 import com.aohanyao.commodityattr.util.FileUtils;
 import com.aohanyao.commodityattr.util.ImageHelper;
+import com.aohanyao.commodityattr.util.L;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -52,9 +53,22 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
      */
     private Map<String, Set<String>> sortValues = new TreeMap<>();
     /**
+     * 存放所有适配器中的数据
+     */
+    private Map<String, List<TagInfo>> mDatas = new TreeMap<>();
+    /**
+     * 所有的适配器
+     */
+    private Map<String, PropertyTagAdapter> mAdapters = new TreeMap<>();
+    /**
      * 筛选帮助类
      */
     private CommoditySpiderHelper mCommoditySpiderHelper;
+    /**
+     * 已经筛选到的属性
+     */
+    private Map<String, String> mSelectAttr = new TreeMap<>();
+
     /**
      * 解析到的数据 Test数据
      */
@@ -74,6 +88,9 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
         if (sortValues.size() == 0) {
             return;
         }
+        //清除已经筛选的属性
+        mSelectAttr.clear();
+
         // TODO 这里的代码全部是用来初始化 弹窗之类的，不用过于在意  start
         mBottomSheetDialog = new MyDialog((Activity) view, R.style.GoodDialog);
         //设置退出速度
@@ -159,15 +176,19 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
      * @param key   key
      * @param ftl   布局
      */
-    private void initAdapter(final TextView tvTip, String key, FlowTagLayout ftl) {
+    private void initAdapter(final TextView tvTip, final String key, final FlowTagLayout ftl) {
         //属性筛选出来
         final List<TagInfo> mAttrs = new ArrayList<>();
+        //存放数据
+        mDatas.put(key, mAttrs);
         //属性
         for (String attr : sortValues.get(key)) {
             mAttrs.add(new TagInfo(attr));
         }
         //适配器
         PropertyTagAdapter mAdapter = new PropertyTagAdapter(mActivity, mAttrs);
+        //存放适配器
+        mAdapters.put(key, mAdapter);
         //设置适配器
         ftl.setAdapter(mAdapter);
         //通知适配器
@@ -178,10 +199,22 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
         ftl.setOnTagSelectListener(new OnTagSelectListener() {
             @Override
             public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
-                //获取悬着到的
-                TagInfo tagInfo = mAttrs.get(selectedList.get(0));
-                //设置
-                tvTip.setText(tagInfo.getText());
+                if (selectedList != null && selectedList.size() > 0) {
+                    //获取悬着到的
+                    TagInfo tagInfo = mAttrs.get(selectedList.get(0));
+                    //设置
+                    tvTip.setText(tagInfo.getText());
+                    //添加到参数中
+                    mSelectAttr.put(key, tagInfo.getText());
+                } else {
+                    //放弃点击了
+                    mSelectAttr.remove(key);
+                    //清除所有的选择
+                    ftl.clearAllOption();
+                }
+                L.e("剩余属性:" + mSelectAttr.toString() + "   ftl:" + ftl.toString());
+                //开始筛选属性
+                filterAttr(mSelectAttr);
             }
         });
     }
@@ -230,8 +263,22 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
 
     @Override
     public void sortAttrs(Map<String, Set<String>> sortAttrs) {
-        Toast.makeText((Activity) view, "已筛选到剩余的属性:" + sortAttrs.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText((Activity) view, "已筛选到剩余的属性:" + sortAttrs.toString(), Toast.LENGTH_SHORT).show();
+        Log.e("sortAttrs: ", sortAttrs.toString());
 
+        //开始遍历
+        for (Map.Entry<String, Set<String>> entry : sortAttrs.entrySet()) {
+            //获取数据源
+            List<TagInfo> mData = mDatas.get(entry.getKey());
+            //遍历没一个数据
+            for (int i = 0; i < mData.size(); i++) {
+                TagInfo info = mData.get(i);
+                //是否包含
+                info.setChecked(entry.getValue().contains(info.getText()));
+            }
+            //通知适配器更改
+            mAdapters.get(entry.getKey()).notifyDataSetChanged();
+        }
 
     }
 

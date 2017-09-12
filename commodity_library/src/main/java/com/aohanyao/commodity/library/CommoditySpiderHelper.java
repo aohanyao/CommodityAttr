@@ -17,8 +17,17 @@ import java.util.TreeMap;
  * <li>商品蜘蛛筛选帮助类</li>
  */
 public class CommoditySpiderHelper {
+    /**
+     * 商品信息
+     */
     private List<CommoditySpiderInfo> commoditySpiderInfos;
+    /**
+     * 筛选结果返回
+     */
     private OnSelectCommodityListener onSelectCommodityListener;
+    /**
+     * 所有的属性名称和值
+     */
     private Map<String, Set<String>> mSortValues;
 
     public CommoditySpiderHelper(List<CommoditySpiderInfo> commoditySpiderInfos, OnSelectCommodityListener onSelectCommodityListener) {
@@ -76,6 +85,15 @@ public class CommoditySpiderHelper {
      * @param params 已选择的属性
      */
     public void filterAttr(Map<String, String> params) {
+
+        //返回所有
+        if (params.size() == 0) {
+            if (onSelectCommodityListener != null) {
+                onSelectCommodityListener.sortAttrs(mSortValues);
+            }
+            return;
+        }
+
         //存放着已经筛选到了的商品
         Set<CommoditySpiderInfo> selectCommodity = new HashSet<>();
 

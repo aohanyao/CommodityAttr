@@ -50,9 +50,10 @@ public class PropertyTagAdapter extends BaseAdapter implements OnInitSelectedPos
 
         TextView textView = (TextView) view.findViewById(R.id.tv_tag);
         TagInfo tagInfo = mDataList.get(position);
-//        textView.setEnabled(false);
-//        textView.setFocusable(false);
-//        textView.setClickable(false);
+        textView.setEnabled(tagInfo.isChecked());
+        view.setEnabled(tagInfo.isChecked());
+//        textView.setFocusable(tagInfo.isChecked());
+//        textView.setClickable(tagInfo.isChecked());
         textView.setText(tagInfo.getText());
         view.setTag(tagInfo);
         return view;

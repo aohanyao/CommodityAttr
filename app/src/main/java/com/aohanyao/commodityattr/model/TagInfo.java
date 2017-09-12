@@ -6,10 +6,12 @@ package com.aohanyao.commodityattr.model;
  * <p>标签</p>
  */
 public class TagInfo {
-    private boolean isChecked;
+
+    private boolean isChecked = true;
     private String text;
     private boolean isSelect;
-    private int positon=0;
+    private int positon = 0;
+
     public TagInfo(boolean isChecked, String text) {
         this.isChecked = isChecked;
         this.text = text;

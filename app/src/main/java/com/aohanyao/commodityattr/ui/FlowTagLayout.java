@@ -7,14 +7,10 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import aohanyao.com.commodityattr.R;
-import com.aohanyao.commodityattr.model.TagInfo;
 
 /**
  * 流式标签布局
@@ -25,7 +21,7 @@ import com.aohanyao.commodityattr.model.TagInfo;
 public class FlowTagLayout extends ViewGroup {
 
     private static final String TAG = FlowTagLayout.class.getSimpleName();
-    private boolean isSetListener = false;
+
     /**
      * FlowLayout not support checked
      */
@@ -68,8 +64,6 @@ public class FlowTagLayout extends ViewGroup {
      * 存储选中的tag
      */
     private SparseBooleanArray mCheckedTagArray = new SparseBooleanArray();
-    private int selectPositon = 0;
-    private List<Integer> integers;
 
     public FlowTagLayout(Context context) {
         super(context);
@@ -183,36 +177,6 @@ public class FlowTagLayout extends ViewGroup {
             childView.layout(left, top, right, bottom);
 
             childLeft += (mlp.leftMargin + childWidth + mlp.rightMargin);
-            TagInfo tagInfo = (TagInfo) childView.getTag();
-
-            if (tagInfo != null) {
-                //childView.setEnabled(tagInfo.isChecked());
-                childView.setSelected(tagInfo.isSelect());
-                if (!tagInfo.isChecked()) {//false
-                    TextView tvTag = (TextView) childView.findViewById(R.id.tv_tag);
-                    if (tvTag != null) {
-                       // tvTag.setBackgroundResource(R.drawable.edit_text_border);
-                    }
-                }
-                if (tagInfo.isSelect()) {//当前被选中
-                    selectPositon = i;
-                    if (mTagCheckMode == FLOW_TAG_CHECKED_SINGLE) {
-                        integers = new ArrayList<>();
-                        integers.add(selectPositon);
-                        if (mOnTagSelectListener != null && !isSetListener) {
-                            try {
-                                mOnTagSelectListener.onItemSelect(FlowTagLayout.this, integers);
-                                isSetListener = true;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-                //---------------------------------------- TODO 有问题 修改为产品中选中  只适合于产品详情中
-
-            }
-            //----------------------------------------  修改为产品中选中  只适合于产品详情中
         }
     }
 
@@ -229,7 +193,6 @@ public class FlowTagLayout extends ViewGroup {
         @Override
         public void onChanged() {
             super.onChanged();
-            isSetListener = false;
             reloadData();
         }
 
@@ -246,49 +209,64 @@ public class FlowTagLayout extends ViewGroup {
     private void reloadData() {
         removeAllViews();
 
+        boolean isSetted = false;
         for (int i = 0; i < mAdapter.getCount(); i++) {
             final int j = i;
             mCheckedTagArray.put(i, false);
             final View childView = mAdapter.getView(i, null, this);
-            addView(childView, new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-            final int finalI = i;
+//            addView(childView,
+//              new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));//这个构造方法所然能使用但是编译器会报错
+            addView(childView, new MarginLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)));
+
+            if (mAdapter instanceof OnInitSelectedPosition) {
+                boolean isSelected = ((OnInitSelectedPosition) mAdapter).isSelectedPosition(i);
+                //判断一下模式
+                if (mTagCheckMode == FLOW_TAG_CHECKED_SINGLE) {
+                    //单选只有第一个起作用
+                    if (isSelected && !isSetted) {
+                        mCheckedTagArray.put(i, true);
+                        childView.setSelected(true);
+                        isSetted = true;
+                    }
+                } else if (mTagCheckMode == FLOW_TAG_CHECKED_MULTI) {
+                    if (isSelected) {
+                        mCheckedTagArray.put(i, true);
+                        childView.setSelected(true);
+                    }
+                }
+            }
+
             childView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!childView.isEnabled()) {
+                        return;
+                    }
+
                     if (mTagCheckMode == FLOW_TAG_CHECKED_NONE) {
                         if (mOnTagClickListener != null) {
                             mOnTagClickListener.onItemClick(FlowTagLayout.this, childView, j);
                         }
-                    } else if (mTagCheckMode == FLOW_TAG_CHECKED_SINGLE) {
-                        TagInfo tagInfo = (TagInfo) childView.getTag();
+                    } else if (mTagCheckMode == FLOW_TAG_CHECKED_SINGLE) {//单选状态
                         //判断状态
                         if (mCheckedTagArray.get(j)) {
                             mCheckedTagArray.put(j, false);
                             childView.setSelected(false);
                             if (mOnTagSelectListener != null) {
-                                try {
-                                    mOnTagSelectListener.onItemSelect(FlowTagLayout.this, new ArrayList<Integer>());
-                                    // L.e("系统调用mOnTagSelectListener");
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                mOnTagSelectListener.onItemSelect(FlowTagLayout.this, new ArrayList<Integer>());
                             }
                             return;
                         }
 
                         for (int k = 0; k < mAdapter.getCount(); k++) {
                             mCheckedTagArray.put(k, false);
-                            View childAt = getChildAt(k);
-                            childAt.setSelected(false);
-                            TagInfo t = (TagInfo) childAt.getTag();
-                            t.setSelect(false);
+                            getChildAt(k).setSelected(false);
                         }
                         mCheckedTagArray.put(j, true);
                         childView.setSelected(true);
-                        tagInfo.setSelect(true);
+
                         if (mOnTagSelectListener != null) {
                             mOnTagSelectListener.onItemSelect(FlowTagLayout.this, Arrays.asList(j));
-                            /// L.e("系统调用mOnTagSelectListener");
                         }
                     } else if (mTagCheckMode == FLOW_TAG_CHECKED_MULTI) {
                         if (mCheckedTagArray.get(j)) {
@@ -307,11 +285,24 @@ public class FlowTagLayout extends ViewGroup {
                                 }
                             }
                             mOnTagSelectListener.onItemSelect(FlowTagLayout.this, list);
-                            //L.e("系统调用mOnTagSelectListener");
                         }
                     }
                 }
             });
+        }
+    }
+
+    /**
+     * 清除所有被选择的选项
+     *
+     * @author https://github.com/wanyt
+     * @time 2016年11月13日16:07:23
+     */
+    public void clearAllOption() {
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            if (mCheckedTagArray.get(i)) {
+                getChildAt(i).setSelected(false);
+            }
         }
     }
 
