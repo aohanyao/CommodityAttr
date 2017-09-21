@@ -75,6 +75,8 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
     private ShopDetailResponseDto responseDto;
 
     private Activity mActivity;
+    private TextView tvPrice;
+    private TextView tvShopName;
 
     public CommodityPresenter(CommodityContract.View view, Activity mActivity) {
         super(view);
@@ -108,8 +110,8 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
         TextView tvMomey = (TextView) contentView.findViewById(R.id.tv_shop_momery);
         TextView tvVersion = (TextView) contentView.findViewById(R.id.tv_shop_version);
         TextView tvShopCountry = (TextView) contentView.findViewById(R.id.tv_shop_country);
-        TextView tvPrice = (TextView) contentView.findViewById(R.id.tv_shop_price);
-        TextView tvShopName = (TextView) contentView.findViewById(R.id.tv_shop_name);
+        tvPrice = (TextView) contentView.findViewById(R.id.tv_shop_price);
+        tvShopName = (TextView) contentView.findViewById(R.id.tv_shop_name);
         ivShopPhoto = (ImageView) contentView.findViewById(R.id.iv_shop_photo);
         //-------颜色、内存、是否分期 数量
 
@@ -212,7 +214,7 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
                     //清除所有的选择
                     ftl.clearAllOption();
                 }
-                L.e("剩余属性:" + mSelectAttr.toString() + "   ftl:" + ftl.toString());
+                L.e("已选择的属性:" + mSelectAttr.toString());
                 //开始筛选属性
                 filterAttr(mSelectAttr);
             }
@@ -253,6 +255,11 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
     public void filterAttr(Map<String, String> params) {
         //筛选剩余属性
         mCommoditySpiderHelper.filterAttr(params);
+
+        //筛选出商品
+        if (params.size()==mAdapters.size()){
+            mCommoditySpiderHelper.filterCommodity(params);
+        }
     }
 
     @Override
@@ -264,7 +271,7 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
     @Override
     public void sortAttrs(Map<String, Set<String>> sortAttrs) {
 //        Toast.makeText((Activity) view, "已筛选到剩余的属性:" + sortAttrs.toString(), Toast.LENGTH_SHORT).show();
-        Log.e("sortAttrs: ", sortAttrs.toString());
+        Log.e("sortAttrs 已筛选到剩余的属性:", sortAttrs.toString());
 
         //开始遍历
         for (Map.Entry<String, Set<String>> entry : sortAttrs.entrySet()) {
@@ -284,6 +291,9 @@ public class CommodityPresenter extends CommodityContract.Presenter<CommodityCon
 
     @Override
     public void onSelectCommodityListener(ShopDetailResponseDto.MsgBean.CommodityBean commodity) {
+        tvPrice.setText("￥"+commodity.getShopprice());
+        tvShopName.setText(commodity.getName());
+        ImageHelper.loadImageFromGlide((Activity) view, commodity.getShowimg(), ivShopPhoto);
 
     }
 }

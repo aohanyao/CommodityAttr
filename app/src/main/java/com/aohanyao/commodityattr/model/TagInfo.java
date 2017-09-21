@@ -7,7 +7,7 @@ package com.aohanyao.commodityattr.model;
  */
 public class TagInfo {
 
-    private boolean isChecked = true;
+    private boolean isChecked = false;
     private String text;
     private boolean isSelect;
     private int positon = 0;

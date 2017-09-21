@@ -1,5 +1,7 @@
 package com.aohanyao.commodity.library;
 
+import android.util.Log;
+
 import com.aohanyao.commodity.library.inf.AttributesValueInf;
 import com.aohanyao.commodity.library.inf.OnSelectCommodityListener;
 import com.aohanyao.commodity.library.model.CommoditySpiderInfo;
@@ -83,6 +85,7 @@ public class CommoditySpiderHelper {
      *          </p>
      * </p>
      * @param params 已选择的属性
+     *               //TODO 这里的属性筛选算法不正确  还在思考 应该怎么搞
      */
     public void filterAttr(Map<String, String> params) {
 
@@ -97,6 +100,8 @@ public class CommoditySpiderHelper {
         //存放着已经筛选到了的商品
         Set<CommoditySpiderInfo> selectCommodity = new HashSet<>();
 
+
+
         //遍历蜘蛛
         for (CommoditySpiderInfo commoditySpiderInfo : commoditySpiderInfos) {
             //遍历商品属性
@@ -104,14 +109,17 @@ public class CommoditySpiderHelper {
                 //保存起来的Key
                 String key = stringStringEntry.getKey();
                 String value = stringStringEntry.getValue();
-
                 //参数中的值与筛选到的值进行对比
-                if (value.equals(params.get(key))) {//获取到当前key value相等的商品  颜色  白色
+                if (value.equals(params.get(key))) {//获取到当前key value相等的商品  颜色  白色  国家
                     //添加到集合中
                     selectCommodity.add(commoditySpiderInfo);
                 }
             }
         }
+
+
+        //上面已经拿到了所有包含params所有属性的商品了
+
 
         //存放已经筛选到的属性值
         Map<String, Set<String>> attrs = new TreeMap<>();
@@ -151,6 +159,7 @@ public class CommoditySpiderHelper {
      * @param params
      */
     public void filterCommodity(Map<String, String> params) {
+        Log.e("filterCommodity: ", "开始筛选商品:" + params.toString());
         boolean isFound;
         //遍历蜘蛛
         for (CommoditySpiderInfo commoditySpiderInfo : commoditySpiderInfos) {
