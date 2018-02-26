@@ -85,9 +85,13 @@ public class CommoditySpiderHelper {
      *          </p>
      * </p>
      * @param params 已选择的属性
-     *               //TODO 这里的属性筛选算法不正确  还在思考 应该怎么搞
+     * ver：2018年2月26日17:20:02<p>
+     *               修改成功了算法，能够筛选出来，剩余就是：当前没有这个属性，
+     *               要去除选择
+     * </p>
      */
     public void filterAttr(Map<String, String> params) {
+
 
         //返回所有
         if (params.size() == 0) {
@@ -101,9 +105,10 @@ public class CommoditySpiderHelper {
         Set<CommoditySpiderInfo> selectCommodity = new HashSet<>();
 
 
-
-        //遍历蜘蛛
+        //遍历蜘蛛 只要和上面属性一致的商品
         for (CommoditySpiderInfo commoditySpiderInfo : commoditySpiderInfos) {
+            //属性对比一致的
+            int equlasCount = 0;
             //遍历商品属性
             for (Map.Entry<String, String> stringStringEntry : commoditySpiderInfo.getFilterValues().entrySet()) {
                 //保存起来的Key
@@ -111,10 +116,16 @@ public class CommoditySpiderHelper {
                 String value = stringStringEntry.getValue();
                 //参数中的值与筛选到的值进行对比
                 if (value.equals(params.get(key))) {//获取到当前key value相等的商品  颜色  白色  国家
-                    //添加到集合中
-                    selectCommodity.add(commoditySpiderInfo);
+                    //对比 +1
+                    equlasCount++;
                 }
             }
+            //相同次数
+            if (equlasCount == params.size()) {
+                //添加到集合中
+                selectCommodity.add(commoditySpiderInfo);
+            }
+
         }
 
 
@@ -159,24 +170,22 @@ public class CommoditySpiderHelper {
      * @param params
      */
     public void filterCommodity(Map<String, String> params) {
-        Log.e("filterCommodity: ", "开始筛选商品:" + params.toString());
-        boolean isFound;
+        Log.e("filterCommodity: ", "根据属性《" + params.toString() + "》开始筛选商品");
         //遍历蜘蛛
         for (CommoditySpiderInfo commoditySpiderInfo : commoditySpiderInfos) {
-            isFound = false;
+            int isFoundCount = 0;
             //遍历商品属性
             for (Map.Entry<String, String> stringStringEntry : commoditySpiderInfo.getFilterValues().entrySet()) {
                 //保存起来的Key
                 String key = stringStringEntry.getKey();
                 String value = stringStringEntry.getValue();
                 //参数对比
-                if (!value.equals(params.get(key))) {
-                    isFound = false;
-                    break;
+                if (value.equals(params.get(key))) {
+                    isFoundCount++;
                 }
-                isFound = true;
             }
-            if (isFound && onSelectCommodityListener != null) {
+            //筛选到  回调商品
+            if (isFoundCount == params.size() && onSelectCommodityListener != null) {
                 onSelectCommodityListener.onSelectCommodityListener(commoditySpiderInfo.getCommodityInf());
                 break;
             }

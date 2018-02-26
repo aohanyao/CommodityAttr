@@ -26,7 +26,8 @@
             {
               "attrvalue": "3GB+32GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "香港",
               "attrname": "国家"
             }
@@ -52,7 +53,8 @@
             {
               "attrvalue": "3GB+32GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "台湾",
               "attrname": "国家"
             }
@@ -78,7 +80,8 @@
             {
               "attrvalue": "3GB+32GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "大陆",
               "attrname": "国家"
             }
@@ -104,7 +107,8 @@
             {
               "attrvalue": "3GB+32GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "大陆",
               "attrname": "国家"
             }
@@ -130,7 +134,8 @@
             {
               "attrvalue": "4GB+64GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "美国",
               "attrname": "国家"
             }
@@ -156,7 +161,8 @@
             {
               "attrvalue": "4GB+64GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "大陆",
               "attrname": "国家"
             }
@@ -182,8 +188,36 @@
             {
               "attrvalue": "4GB+64GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "大陆",
+              "attrname": "国家"
+            }
+          ]
+        }
+      },
+      {
+        "pid": "399",
+        "name": "华为 P9全网通 4GB+64GB版 陶瓷白 移动联通电信4G手机 双卡双待 大陆",
+        "shopprice": "3588.0000",
+        "showimg": "http://obh9jd33g.bkt.clouddn.com/20160709103542777.png",
+        "attrinfo": {
+          "attrnames": "颜色,容量,版本",
+          "attrs": [
+            {
+              "attrvalue": "陶瓷白",
+              "attrname": "颜色"
+            },
+            {
+              "attrvalue": "移动4G版",
+              "attrname": "制式"
+            },
+            {
+              "attrvalue": "3GB+32GB",
+              "attrname": "内存"
+            },
+            {
+              "attrvalue": "美国",
               "attrname": "国家"
             }
           ]
@@ -208,7 +242,8 @@
             {
               "attrvalue": "3GB+32GB",
               "attrname": "内存"
-            },{
+            },
+            {
               "attrvalue": "大陆",
               "attrname": "国家"
             }

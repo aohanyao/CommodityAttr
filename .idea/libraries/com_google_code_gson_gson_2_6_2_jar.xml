@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="gson-2.6.2">
+  <library name="com.google.code.gson:gson:2.6.2@jar">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.2/f1bc476cc167b18e66c297df599b2377131a8947/gson-2.6.2.jar!/" />
     </CLASSES>
